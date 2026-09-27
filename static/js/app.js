@@ -1051,6 +1051,16 @@ store.load();
 player.init(document.getElementById("audio"));
 player.volume = store.volume;
 document.getElementById("volume").value = String(player.volume);
+// A <base> tag (htmlpreview inserts one) would send "#/floor" off to the raw file.
+document.addEventListener("click", (event) => {
+  const a = event.target.closest?.("a[href]");
+  if (!a) return;
+  const href = a.getAttribute("href") || "";
+  if (!href.startsWith("#")) return;
+  event.preventDefault();
+  go(href);
+}, true);
+
 if (!location.hash) location.hash = "#/";
 render();
 checkHealth().then(() => {
