@@ -27,7 +27,8 @@ const streamCache = new Map();
 // The house line only exists when this page is served from its own root.
 // A static host (jsDelivr, GitHack) has no /api, and a leading-slash fetch
 // would hit that host's root instead of quietly falling through.
-const house = location.pathname === "/" || location.pathname === "/index.html";
+const house = (location.pathname === "/" || location.pathname === "/index.html")
+  && !/github\.io|jsdelivr|statically|githack|githubusercontent/.test(location.hostname);
 
 export function line() {
   return health;
